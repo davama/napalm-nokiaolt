@@ -823,3 +823,21 @@ class NokiaOltDriver(NetworkDriver):
                 except IndexError:
                     continue
         return lldp
+
+    def get_equipment_transceiver_inventory_detail(self):
+        "Returns the full inventory of transceivers installed in the OLT"
+        command = "show equipment transceiver-inventory detail"
+        data = self._send_command(command, xml_format=True)
+        if data:
+            # On some devices, this part of the XML was returning wierd characters that broke
+            # the XML parser.
+            # As we don't use the field anyway, it was simpler to remove it from the XML.
+            detailed_sfp = re.sub(
+                r'<info name="additional-info" .*?<\/info>',
+                "",
+                data,
+            )
+            data_list = self.convert_xml_to_list(detailed_sfp)
+            return self._convert_list_to_dict(data_list, "index")
+        else:
+            return f"No available ** {command} ** data from the {self.hostname}"
