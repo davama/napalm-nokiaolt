@@ -27,6 +27,7 @@
   <li>get_equipment_ont_sw_version</li>
   <li>get_software_mgmt_version_etsi</li>
   <li>get_equipment_transceiver_inventor</li>
+  <li>get_equipment_transceiver_inventory_detail</li>
   <li>get_equipment_diagnostics_sfp</li>
   <li>get_vlan_name</li>
   <li>get_vlan_bridge_port_fdb</li>
